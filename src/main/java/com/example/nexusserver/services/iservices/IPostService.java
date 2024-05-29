@@ -11,9 +11,11 @@ public interface IPostService {
 
     List<Post> findPostByUserId(Integer userId);
 
-    Post findPostById(Integer postId);
+    Post findPostById(Integer postId) throws Exception;
 
-    Post savedPost(Integer postId, Integer userId);
+    Post savedPost(Integer postId, Integer userId) throws Exception;
 
-    String deletePost(Integer postId, Integer userId);
+    String deletePost(Integer postId, Integer userId) throws Exception;
+
+    Post likePost(Integer postId, Integer userId) throws Exception;
 }

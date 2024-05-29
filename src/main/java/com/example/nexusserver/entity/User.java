@@ -34,6 +34,10 @@ public class User {
     @Column(name = "followings")
     private String followingsJson = "[]";
 
+    @JsonIgnore
+    @ManyToMany
+    private List<Post> savedPost = new ArrayList<>();
+
     @Transient
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
