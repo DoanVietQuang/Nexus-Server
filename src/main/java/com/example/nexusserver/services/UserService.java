@@ -1,5 +1,6 @@
 package com.example.nexusserver.services;
 
+import com.example.nexusserver.config.JwtProvider;
 import com.example.nexusserver.entity.User;
 import com.example.nexusserver.repository.UserRepository;
 import com.example.nexusserver.services.iservices.IUserService;
@@ -8,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class UserService implements IUserService {
     private final UserRepository userRepository;
+
 
     @Override
     public List<User> findAllUser() {
@@ -50,36 +51,46 @@ public class UserService implements IUserService {
         if (user.getEmail() != null) {
             existingUser.setEmail(user.getEmail());
         }
+        if (user.getGender() != null) {
+            existingUser.setGender(user.getGender());
+        }
         // Do not update password or followers/followings here for security and consistency
         return userRepository.save(existingUser);
     }
 
     @Override
-    public User followUser(Integer userId1, Integer userId2) throws Exception {
-        User user1 = findUserById(userId1);
+    public User followUser(Integer reqUserId, Integer userId2) throws Exception {
+        User reqUser = findUserById(reqUserId);
         User user2 = findUserById(userId2);
 
         List<Integer> followers = user2.getFollowers();
-        List<Integer> followings = user1.getFollowings();
+        List<Integer> followings = reqUser.getFollowings();
 
-        if (!followers.contains(user1.getId())) {
-            followers.add(user1.getId());
+        if (!followers.contains(reqUser.getId())) {
+            followers.add(reqUser.getId());
         }
         if (!followings.contains(user2.getId())) {
             followings.add(user2.getId());
         }
 
         user2.setFollowers(followers);
-        user1.setFollowings(followings);
+        reqUser.setFollowings(followings);
 
-        userRepository.save(user1);
+        userRepository.save(reqUser);
         userRepository.save(user2);
 
-        return user1;
+        return reqUser;
     }
 
     @Override
     public List<User> searchUser(String query) {
         return userRepository.searchUser(query);
+    }
+
+    @Override
+    public User findUserByJwt(String jwt) {
+        String email = JwtProvider.getEmailFromToken(jwt);
+        User user = userRepository.findByEmail(email);
+        return user;
     }
 }
