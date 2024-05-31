@@ -1,6 +1,5 @@
 package com.example.nexusserver.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,26 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "post")
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+@AllArgsConstructor
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String caption;
-    private String image;
-    private String video;
+
+    private String content;
 
     @ManyToOne
     private User user;
 
-    @OneToMany
-    private List<User> likes = new ArrayList<>();
-
-    @OneToMany
-    private List<Comment> comments = new ArrayList<>();
+    @ManyToMany
+    private List<User> liked = new ArrayList<>();
 
     private LocalDateTime createdAt;
+
+
 }

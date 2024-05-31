@@ -44,10 +44,10 @@ public class PostService implements IPostService {
     @Override
     public Post findPostById(Integer postId) throws Exception {
         Optional<Post> optionalPost = postRepository.findById(postId);
-        if (optionalPost.isPresent()) {
-            return optionalPost.get();
+        if (optionalPost.isEmpty()) {
+            throw new Exception("post not found with id " + postId);
         }
-        throw new Exception("post not found with id " + postId);
+        return optionalPost.get();
     }
 
     @Override
