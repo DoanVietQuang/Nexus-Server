@@ -22,13 +22,6 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User registerUser(User user) {
-        user.setFollowers(new ArrayList<>()); // Ensure lists are initialized
-        user.setFollowings(new ArrayList<>());
-        return userRepository.save(user);
-    }
-
-    @Override
     public User findUserById(Integer userId) throws Exception {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new Exception("User not found with id " + userId));

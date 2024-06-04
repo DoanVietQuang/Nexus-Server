@@ -18,10 +18,6 @@ public class UserController {
         return userService.findAllUser();
     }
 
-    @PostMapping("/create")
-    public User createUser(@RequestBody User user) {
-        return userService.registerUser(user);
-    }
 
     @GetMapping("/{userId}")
     public User findUserById(@PathVariable Integer userId) throws Exception {

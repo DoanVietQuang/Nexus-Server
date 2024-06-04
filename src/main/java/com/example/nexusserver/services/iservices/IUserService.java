@@ -7,8 +7,6 @@ import java.util.List;
 public interface IUserService {
     public List<User> findAllUser();
 
-    public User registerUser(User user);
-
     public User findUserById(Integer userId) throws Exception;
 
     public User findUserByEmail(String email);
