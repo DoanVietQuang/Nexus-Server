@@ -2,6 +2,7 @@ package com.example.nexusserver.services;
 
 import com.example.nexusserver.config.JwtProvider;
 import com.example.nexusserver.entity.User;
+import com.example.nexusserver.exceptions.UserException;
 import com.example.nexusserver.repository.UserRepository;
 import com.example.nexusserver.services.iservices.IUserService;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,9 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User findUserById(Integer userId) throws Exception {
+    public User findUserById(Integer userId) throws UserException {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new Exception("User not found with id " + userId));
+                .orElseThrow(() -> new UserException("User not found with id " + userId));
     }
 
     @Override
@@ -33,7 +34,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User updateUser(User user, Integer userId) throws Exception {
+    public User updateUser(User user, Integer userId) throws UserException {
         User existingUser = findUserById(userId);
         if (user.getFirstName() != null) {
             existingUser.setFirstName(user.getFirstName());
@@ -52,7 +53,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User followUser(Integer reqUserId, Integer userId2) throws Exception {
+    public User followUser(Integer reqUserId, Integer userId2) throws UserException {
         User reqUser = findUserById(reqUserId);
         User user2 = findUserById(userId2);
 
