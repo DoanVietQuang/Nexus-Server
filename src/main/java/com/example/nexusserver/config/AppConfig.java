@@ -38,7 +38,7 @@ public class AppConfig {
             public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
                 CorsConfiguration config = new CorsConfiguration();
 //                UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-                config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://127.0.0.1:3000",
+                config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:3001","http://127.0.0.1:3000",
                         "http://localhost:8080"));
                 config.setAllowedMethods(Collections.singletonList("*"));
                 config.setAllowCredentials(true);

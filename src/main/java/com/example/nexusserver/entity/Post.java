@@ -26,7 +26,7 @@ public class Post {
     @ManyToOne
     private User user;
 
-    @OneToMany
+    @ManyToMany
     private List<User> likes = new ArrayList<>();
 
     @OneToMany

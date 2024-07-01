@@ -34,4 +34,5 @@ public class ChatController {
         List<Chat> chats = chatService.findUsersChat(reqUser.getId());
         return new ResponseEntity<List<Chat>>(chats, HttpStatus.ACCEPTED);
     }
+
 }
